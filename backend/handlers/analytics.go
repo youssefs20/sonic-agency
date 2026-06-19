@@ -15,7 +15,8 @@ func TrackEvent(db *pgxpool.Pool) gin.HandlerFunc {
 		var body models.AnalyticsEvent
 
 		if err := c.ShouldBindJSON(&body); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			log.Printf("[analytics] Invalid request: %v", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request."})
 			return
 		}
 
