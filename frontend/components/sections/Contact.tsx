@@ -4,6 +4,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { submitContactForm } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 
 const INFO = [
   { label: "Email", value: "hello@sonicagency.com" },
@@ -35,6 +36,7 @@ export default function Contact() {
       await submitContactForm(form);
       setStatus("success");
       setForm(EMPTY_FORM);
+      trackEvent("contact_form_submit", { source: "contact_section" });
     } catch {
       setStatus("error");
     }

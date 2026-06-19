@@ -17,3 +17,20 @@ export async function submitContactForm(data: {
   if (!res.ok) throw new Error("Failed to submit contact form");
   return res.json();
 }
+
+// Matches the backend AnalyticsEvent schema: event_name (required),
+// optional path and source. Callers should go through lib/analytics.ts
+// rather than calling this directly.
+export async function sendAnalyticsEvent(event: {
+  event_name: string;
+  path?: string;
+  source?: string;
+}) {
+  const res = await fetch(`${API_BASE}/api/analytics/event`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(event),
+  });
+  if (!res.ok) throw new Error("Failed to send analytics event");
+  return res.json();
+}
