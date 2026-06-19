@@ -30,7 +30,7 @@ func Register(r *gin.Engine, db *pgxpool.Pool, cfg config.Config) {
 			c.JSON(http.StatusOK, gin.H{"status": "ok"})
 		})
 
-		api.POST("/contact", perIPRateLimit(5, 10), handlers.SubmitContact(db))
+		api.POST("/contact", perIPRateLimit(5, 10), handlers.SubmitContact(db, cfg))
 		api.POST("/analytics/event", perIPRateLimit(30, 10), handlers.TrackEvent(db))
 	}
 }

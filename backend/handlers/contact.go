@@ -6,13 +6,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"sonic/backend/config"
+	"sonic/backend/email"
 	"sonic/backend/models"
 )
 
 // SubmitContact returns a Gin handler that saves a contact form to the DB.
 // We use this "closure" pattern so the handler has access to the DB pool
 // without needing a global variable.
-func SubmitContact(db *pgxpool.Pool) gin.HandlerFunc {
+func SubmitContact(db *pgxpool.Pool, cfg config.Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body models.ContactSubmission
 
@@ -31,6 +33,12 @@ func SubmitContact(db *pgxpool.Pool) gin.HandlerFunc {
 		}
 
 		log.Printf("[contact] Saved submission id=%d from %s <%s>", id, body.Name, body.Email)
+
+		// The submission is already saved, so an email failure shouldn't
+		// fail the user's request — just log it for follow-up.
+		if err := email.SendContactNotification(cfg, body.Name, body.Email, body.Phone, body.Message); err != nil {
+			log.Printf("[contact] Failed to send notification email: %v", err)
+		}
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Message received! We'll be in touch within 24 hours.",
