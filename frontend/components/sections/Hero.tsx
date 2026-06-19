@@ -47,7 +47,7 @@ export default function Hero() {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 items-center">
-          <Button variant="primary" className="text-base px-8 py-4">
+          <Button variant="primary" trackName="hero_see_our_work" className="text-base px-8 py-4">
             See Our Work
           </Button>
           <a

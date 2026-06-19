@@ -52,7 +52,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Button variant="primary" className="hidden md:inline-flex text-sm px-5 py-2.5">
+          <Button variant="primary" trackName="header_start_project" className="hidden md:inline-flex text-sm px-5 py-2.5">
             Start a Project
           </Button>
         </div>
