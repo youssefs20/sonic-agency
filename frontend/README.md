@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sonic Agency — Frontend
 
-## Getting Started
+Marketing website for Sonic, a digital marketing agency. This is the
+frontend: a Next.js (App Router, TypeScript, Tailwind CSS) single-page
+site with light/dark mode, a contact form, lightweight analytics, and a
+branded loading animation.
 
-First, run the development server:
+The Go API and PostgreSQL database live in the sibling `../backend`
+directory.
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To exercise the contact form and analytics against the real API, start
+the backend (see `../backend`) and set the API URL:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# frontend/.env.local
+NEXT_PUBLIC_API_URL=http://localhost:8080
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/                 Routes, root layout, global styles, favicons
+components/
+  layout/            Header, Footer, LoadingScreen
+  sections/          Hero, About, Services, Portfolio, Testimonials, Contact
+  ui/                Button, SectionTitle, ThemeToggle
+  AnalyticsTracker   Fires a page_view on load
+lib/
+  api.ts             All calls to the Go backend
+  analytics.ts       Tracking helper (page views, clicks, form submits)
+public/assets/       Brand logo and imagery
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+npm run start
+```
