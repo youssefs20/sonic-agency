@@ -4,12 +4,18 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"sonic/backend/config"
 	"sonic/backend/db"
 	"sonic/backend/routes"
 )
 
 func main() {
+	// Load backend/.env into the process environment for local dev. In
+	// production, real env vars are set by the host and this file won't
+	// exist — godotenv.Load returning an error here is expected, not fatal.
+	_ = godotenv.Load()
+
 	cfg := config.Load()
 
 	if cfg.AppEnv == "production" {
