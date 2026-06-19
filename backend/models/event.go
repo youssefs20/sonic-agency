@@ -8,9 +8,9 @@ import (
 
 type AnalyticsEvent struct {
 	ID        int    `json:"id"`
-	EventName string `json:"event_name" binding:"required"`
-	Path      string `json:"path"`
-	Source    string `json:"source"`
+	EventName string `json:"event_name" binding:"required,max=100"`
+	Path      string `json:"path"       binding:"max=500"`
+	Source    string `json:"source"     binding:"max=200"`
 	CreatedAt string `json:"created_at"`
 }
 

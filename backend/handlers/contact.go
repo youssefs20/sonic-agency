@@ -18,7 +18,8 @@ func SubmitContact(db *pgxpool.Pool) gin.HandlerFunc {
 
 		// ShouldBindJSON reads the JSON body AND validates required fields + email format
 		if err := c.ShouldBindJSON(&body); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			log.Printf("[contact] Invalid request: %v", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request. Please check your input and try again."})
 			return
 		}
 
