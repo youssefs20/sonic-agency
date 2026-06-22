@@ -22,3 +22,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# Local design reference material (source PDFs) — keep local, never commit
+design-assets/

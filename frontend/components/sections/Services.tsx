@@ -1,51 +1,71 @@
-import SectionTitle from "@/components/ui/SectionTitle";
-
-const SERVICES = [
-  { number: "01", title: "Performance Marketing", description: "Paid search, paid social, and programmatic campaigns built to generate measurable ROI — not just clicks.", tags: ["Google Ads", "Meta Ads", "TikTok Ads"] },
-  { number: "02", title: "Brand Strategy",         description: "Positioning, messaging, and identity work that makes your brand impossible to ignore and easy to remember.", tags: ["Positioning", "Identity", "Messaging"] },
-  { number: "03", title: "Creative Production",    description: "Scroll-stopping ads, landing pages, and video content crafted by our in-house creative team.", tags: ["Video", "Static Ads", "Landing Pages"] },
-  { number: "04", title: "Social Media",           description: "Organic content strategy and community management that builds real audiences and brand loyalty.", tags: ["Instagram", "TikTok", "LinkedIn"] },
-  { number: "05", title: "SEO & Content",          description: "Long-term organic growth through technical SEO, content strategy, and authority building.", tags: ["Technical SEO", "Content", "Link Building"] },
-  { number: "06", title: "Analytics & Reporting",  description: "Crystal-clear dashboards and monthly reports that show exactly what's working and what's next.", tags: ["GA4", "Custom Dashboards", "Attribution"] },
+const PILLARS = [
+  {
+    title: "Content Strategy & Production",
+    tagline: "We don't create random posts. We build content systems designed to convert.",
+    items: ["Brand strategy & content pillars", "30–90 day content calendars", "Copy, video & creative direction", "Community management"],
+    chips: ["Strategy", "Video", "Copy"],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="2" /><path d="M7 8h10M7 12h6M7 16h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+    ),
+    accent: false,
+  },
+  {
+    title: "Paid Media & Performance",
+    tagline: "We run ads to reach goals, not to spend budgets.",
+    items: ["Campaign strategy & funnel design", "Meta, Google & TikTok management", "Conversion optimization", "Analytics & weekly reporting"],
+    chips: ["Meta", "Google", "TikTok"],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 3 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><path d="M21 7v5h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    ),
+    accent: true,
+  },
+  {
+    title: "Growth Systems",
+    tagline: "We build systems that compound. Not one-off campaigns.",
+    items: ["Email & retention automation", "Personal brand building", "Website & conversion-rate work", "Repeat-purchase optimization"],
+    chips: ["Email", "Retention", "CRO"],
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+    ),
+    accent: false,
+  },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="py-28 bg-gray-50 dark:bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="services" className="py-20 md:py-28">
+      <div className="container-x">
+        <div className="max-w-2xl">
+          <p className="kicker reveal">What we deliver</p>
+          <h2 className="h-sec text-foreground mt-5 reveal">End-to-end growth, three systems.</h2>
+          <p className="mt-5 text-muted text-lg reveal">One performance team across content, paid media, and retention — so insight from one compounds across all three.</p>
+        </div>
 
-        <SectionTitle
-          label="What We Do"
-          title="Services Built for Growth"
-          subtitle="Everything your brand needs to acquire customers, retain them, and scale."
-        />
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {SERVICES.map((service) => (
-            <div
-              key={service.number}
-              className="group border border-gray-200 dark:border-white/8 rounded-2xl p-7 bg-white dark:bg-white/2 shadow-sm dark:shadow-none hover:border-brand-blue/50 hover:shadow-brand-blue/10 hover:shadow-md dark:hover:bg-brand-blue/5 transition-all duration-300 cursor-default"
-            >
-              <span className="text-xs font-mono text-brand-blue/70 font-semibold tracking-widest">
-                {service.number}
-              </span>
-
-              <h3 className="text-brand-black dark:text-white font-bold text-xl mt-3 mb-3 group-hover:text-brand-blue transition-colors">
-                {service.title}
-              </h3>
-
-              <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-5">
-                {service.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2">
-                {service.tags.map((tag) => (
-                  <span key={tag} className="text-xs text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-white/10 rounded-full px-3 py-1 group-hover:border-brand-blue/30 transition-colors">
-                    {tag}
-                  </span>
-                ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+          {PILLARS.map((p, i) => (
+            <article key={p.title} className="card card-hover card-accent p-7 reveal flex flex-col" style={{ transitionDelay: `${i * 0.06}s` }}>
+              <div
+                className="h-11 w-11 rounded-xl grid place-items-center mb-5"
+                style={{ background: p.accent ? "color-mix(in oklab, var(--red) 12%, transparent)" : "color-mix(in oklab, var(--blue) 12%, transparent)", color: p.accent ? "var(--red)" : "var(--blue)" }}
+              >
+                {p.icon}
               </div>
-            </div>
+              <h3 className="text-foreground text-xl font-semibold font-display">{p.title}</h3>
+              <p className="mt-2 text-sm text-muted">{p.tagline}</p>
+
+              <ul className="mt-5 space-y-2.5 flex-1">
+                {p.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/90">
+                    <svg className="mt-1 shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="var(--blue)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {p.chips.map((c) => <span key={c} className="chip">{c}</span>)}
+              </div>
+            </article>
           ))}
         </div>
       </div>
