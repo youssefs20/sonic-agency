@@ -1,29 +1,21 @@
+// Real brands from the company profile "BRANDS WE WORKED WITH" wall.
 const CLIENTS = [
-  "Crystal Teeth",
-  "Golden Touch",
-  "Exceer",
-  "Al Hanove",
-  "Ceramica Ranito",
-  "Mezon",
-  "Rfaheya",
-  "Oriyah Polyclinic",
-  "M-Design",
-  "NutriFitness",
-  "Donuts Bakery",
+  "Crystal Teeth", "Golden Touch", "Rfaheya", "Chicken Maraei", "Mezon",
+  "NutriFitness", "Aseer Pharmacies", "Donuts Bakery", "M-Design", "Oriyah Polyclinic",
+  "Al Hanove Travel", "Ceramica Ranito", "Modern House", "VIRA Real Estate", "Profilm",
+  "Fit Factory", "Gabal Omar", "Chicken Plus", "Banny", "Zad of Quran",
+  "Alnour Center", "El Shobrawy", "El Sherbiny", "Hbet Zaatar", "El Demeshky",
 ];
 
 export default function ClientMarquee() {
   const row = [...CLIENTS, ...CLIENTS]; // duplicated for a seamless -50% loop
 
   return (
-    <section className="border-y border-line py-12">
-      <div className="container-x">
-        <p className="kicker mb-6">Trusted across health, retail, e-commerce, real estate &amp; B2B</p>
-      </div>
-      <div className="marquee-track overflow-hidden relative">
-        <div className="pointer-events-none absolute left-0 inset-y-0 w-24 z-10 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute right-0 inset-y-0 w-24 z-10 bg-gradient-to-l from-background to-transparent" />
-        <div className="marquee gap-12">
+    <section className="panel-bg" style={{ padding: "2.75rem 0" }}>
+      <div className="overflow-hidden relative">
+        <div className="pointer-events-none absolute left-0 inset-y-0 w-24 z-10" style={{ background: "linear-gradient(90deg, var(--panel), transparent)" }} />
+        <div className="pointer-events-none absolute right-0 inset-y-0 w-24 z-10" style={{ background: "linear-gradient(270deg, var(--panel), transparent)" }} />
+        <div className="marquee gap-12" style={{ animationDuration: "70s" }}>
           {row.map((name, i) => (
             <span key={i} className="font-display font-bold text-xl md:text-2xl text-muted-2 whitespace-nowrap px-2">
               {name}

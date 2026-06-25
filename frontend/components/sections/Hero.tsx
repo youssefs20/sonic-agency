@@ -1,41 +1,46 @@
 import Button from "@/components/ui/Button";
+import HeroLightning from "@/components/HeroLightning";
 
+// All figures below come straight from the company profile:
+//   +300% sales growth (Golden Touch) · +167% bookings (Crystal Teeth)
+//   25 brands on the "Brands we worked with" wall · 30–90 day engagements.
 const STATS = [
-  { count: 300, prefix: "+", suffix: "%", label: "Peak sales growth" },
-  { count: 10,  prefix: "",  suffix: "x", label: "Peak ROAS" },
-  { count: 14,  prefix: "",  suffix: "",  label: "Brands scaled" },
+  { count: 300, prefix: "+", suffix: "%", color: "var(--foreground)", label: "Peak sales growth" },
+  { count: 167, prefix: "+", suffix: "%", color: "var(--red)", label: "Peak bookings growth" },
+  { count: 25, prefix: "", suffix: "", color: "var(--foreground)", label: "Brands scaled" },
 ];
-
-const BARS = [28, 40, 35, 52, 48, 63, 58, 75, 100];
 
 export default function Hero() {
   return (
-    <section id="top" className="relative bg-grid overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
-      {/* glows */}
-      <div className="pointer-events-none absolute -top-40 -left-32 h-[36rem] w-[36rem] rounded-full" style={{ background: "radial-gradient(circle, var(--glow-blue), transparent 60%)", filter: "blur(40px)" }} />
-      <div className="pointer-events-none absolute -top-24 right-0 h-[26rem] w-[26rem] rounded-full" style={{ background: "radial-gradient(circle, var(--glow-red), transparent 65%)", filter: "blur(50px)" }} />
-      <div className="speedlines hidden md:block">
-        <span style={{ top: "24%", animationDelay: "0s" }} />
-        <span style={{ top: "50%", animationDelay: "2.2s" }} />
-        <span style={{ top: "72%", animationDelay: "4.5s" }} />
+    <section id="top" className="bg-grid" style={{ position: "relative", overflow: "hidden", paddingTop: "11rem", paddingBottom: "5rem" }}>
+      <HeroLightning />
+      <div className="glow glow-blue" style={{ top: "-10rem", left: "-8rem", height: "36rem", width: "36rem" }} />
+      <div className="glow glow-red" style={{ top: "-6rem", right: 0, height: "26rem", width: "26rem", filter: "blur(50px)" }} />
+
+      <div className="speedlines" aria-hidden="true" style={{ opacity: 0.3 }}>
+        <span style={{ top: "22%", animationDelay: "0s" }} />
+        <span style={{ top: "58%", animationDelay: "1.5s" }} />
+        <span style={{ top: "82%", animationDelay: "3s" }} />
       </div>
 
-      <div className="container-x relative grid lg:grid-cols-12 gap-12 items-center">
-        {/* Copy */}
-        <div className="lg:col-span-7">
-          <div className="chip reveal">
-            <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "var(--blue)" }} />
+      <div className="container-x" style={{ position: "relative", zIndex: 2 }}>
+        <div className="hero-inner">
+          <span className="chip hero-anim hero-a0" style={{ background: "var(--background)" }}>
+            <span style={{ display: "inline-block", height: "6px", width: "6px", borderRadius: "50%", background: "var(--blue)" }} />
             Digital Growth Agency · MENA
-          </div>
-          <h1 className="h-hero text-foreground mt-6 reveal">
-            We don&apos;t manage.<br />
-            We <span className="text-grad">grow.</span>
+          </span>
+          <h1 className="h-hero" style={{ color: "var(--foreground)", marginTop: "1.5rem", marginBottom: 0 }}>
+            <span className="hero-anim hero-a1" style={{ display: "block" }}>We don&apos;t manage.</span>
+            <span className="hero-line2">
+              <span className="hero-streak" aria-hidden="true"><i /><i /><i /><i /></span>
+              <span className="hero-grow text-grad">We grow.</span>
+              <span className="hero-grow-underline" aria-hidden="true" />
+            </span>
           </h1>
-          <p className="mt-7 text-lg md:text-xl text-muted max-w-xl reveal" style={{ transitionDelay: ".08s" }}>
-            A full-service growth agency that turns content, paid media, and
-            systems into measurable revenue — not reports.
+          <p className="hero-anim hero-a3" style={{ margin: "1.5rem auto 0", fontSize: "1.05rem", color: "var(--muted)", maxWidth: "38rem", lineHeight: 1.55 }}>
+            A full-service growth agency that turns content, paid media, and systems into measurable revenue — not reports.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3 reveal" style={{ transitionDelay: ".16s" }}>
+          <div className="hero-anim hero-a4" style={{ marginTop: "2.25rem", display: "flex", flexWrap: "wrap", gap: "0.75rem", justifyContent: "center" }}>
             <a href="#contact">
               <Button variant="primary" trackName="hero_book_call">
                 Book a Strategy Call
@@ -46,40 +51,21 @@ export default function Hero() {
               <Button variant="ghost" trackName="hero_see_work">See Our Work</Button>
             </a>
           </div>
-
-          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 reveal" style={{ transitionDelay: ".24s" }}>
-            {STATS.map((s, i) => (
-              <div key={s.label} className="flex items-center gap-x-8">
-                {i > 0 && <span className="hidden sm:block h-9 w-px bg-line" />}
-                <div>
-                  <div className="font-display text-2xl font-bold text-foreground" data-count={s.count} data-prefix={s.prefix} data-suffix={s.suffix}>
-                    {s.prefix}0{s.suffix}
-                  </div>
-                  <div className="font-mono text-xs text-muted-2 uppercase tracking-wider mt-0.5">{s.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Growth chart visual */}
-        <div className="lg:col-span-5 reveal" style={{ transitionDelay: ".12s" }}>
-          <div className="hero-chart-wrap">
-            <div className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, transparent 50%, color-mix(in oklab, var(--background) 55%, transparent))" }} />
-            <div className="pointer-events-none absolute inset-0 flex flex-col justify-evenly px-6" style={{ paddingBottom: "3.5rem" }}>
-              <div className="h-px bg-line" />
-              <div className="h-px bg-line" />
-              <div className="h-px bg-line" />
+        {/* Stat cluster — animated count-up via ScrollFX */}
+        <div className="hero-stats">
+          {STATS.map((s) => (
+            <div key={s.label} className="hero-stat">
+              <div className="v" style={{ color: s.color }} data-count={s.count} data-prefix={s.prefix} data-suffix={s.suffix}>
+                {s.prefix}0{s.suffix}
+              </div>
+              <div className="l">{s.label}</div>
             </div>
-            {BARS.map((h, i) => (
-              <div key={i} className={`hero-chart-bar${i === BARS.length - 1 ? " accent" : ""}`} style={{ height: `${h}%` }} />
-            ))}
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl border border-line bg-background/75 backdrop-blur px-4 py-3">
-              <span className="font-mono text-xs text-muted">GROWTH · 90 DAYS</span>
-              <span className="flex items-center gap-1.5 text-foreground font-semibold text-sm">
-                <span style={{ color: "var(--blue)" }}>▲</span> +300% revenue
-              </span>
-            </div>
+          ))}
+          <div className="hero-stat">
+            <div className="v" style={{ color: "var(--blue)" }}>30–90</div>
+            <div className="l">Days to results</div>
           </div>
         </div>
       </div>

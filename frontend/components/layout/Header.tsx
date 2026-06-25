@@ -3,10 +3,9 @@ import Button from "@/components/ui/Button";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "Work",     href: "#work" },
-  { label: "Results",  href: "#results" },
-  { label: "About",    href: "#about" },
+  { label: "About",   href: "#about" },
+  { label: "Work",    href: "#work" },
+  { label: "Results", href: "#cases" },
 ];
 
 export default function Header() {
