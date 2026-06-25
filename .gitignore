@@ -25,3 +25,5 @@ Thumbs.db
 
 # Local design reference material (source PDFs) — keep local, never commit
 design-assets/
+# Company-profile PDF — large content source, kept local (not served/linked)
+frontend/public/SONIC--_.pdf

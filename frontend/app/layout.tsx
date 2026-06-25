@@ -4,7 +4,6 @@ import "./globals.css";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import ScrollFX from "@/components/ScrollFX";
-import CursorTrail from "@/components/CursorTrail";
 
 // Display / headlines
 const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
@@ -15,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({ variable: "--font-jet", subsets: ["latin"
 
 export const metadata: Metadata = {
   title: "Sonic Growth Agency — We don't manage. We grow.",
-  description: "Sonic is a full-service growth agency building content, paid media, and growth systems for brands across the MENA region. 14 clients, an average of 2–3x growth in 30–90 days.",
+  description: "Sonic is a full-service growth agency building content, paid media, and growth systems for brands across the MENA region. 25 brands, an average of 2–3x growth in 30–90 days.",
 };
 
 // Runs before React hydrates — prevents flash of wrong theme
@@ -38,7 +37,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LoadingScreen />
-        <CursorTrail />
         <ScrollFX />
         <AnalyticsTracker />
         {children}
