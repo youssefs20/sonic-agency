@@ -6,7 +6,8 @@ import Socials from "@/components/ui/Socials";
 import { submitContactForm } from "@/lib/api";
 import { trackEvent } from "@/lib/analytics";
 
-const EMPTY_FORM = { name: "", email: "", phone: "", message: "" };
+// `website` is a honeypot — hidden from humans, so only bots fill it.
+const EMPTY_FORM = { name: "", email: "", phone: "", message: "", website: "" };
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function Contact() {
@@ -52,7 +53,6 @@ export default function Contact() {
             </p>
 
             <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {/* TODO: replace placeholder email before launch */}
               <ContactRow icon="mail">
                 <a href="mailto:grow@sonic.agency" className="hover:text-brand-blue transition-colors" style={{ color: "var(--foreground)", fontWeight: 500 }}>grow@sonic.agency</a>
               </ContactRow>
@@ -69,6 +69,14 @@ export default function Contact() {
 
           {/* Form */}
           <form className="card reveal" data-delay="1" onSubmit={handleSubmit} style={{ padding: "2rem" }}>
+            {/* Honeypot — visually hidden and skipped by keyboard/screen readers;
+                bots that fill every field get silently dropped by the backend. */}
+            <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: 0, height: 0, overflow: "hidden" }}>
+              <label>
+                Website
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange("website")} />
+              </label>
+            </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className={labelClass}>Name *</label>

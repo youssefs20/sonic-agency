@@ -13,6 +13,8 @@ export async function submitContactForm(data: {
   email: string;
   phone: string;
   message: string;
+  // Honeypot field — always empty for real users; see Contact.tsx.
+  website?: string;
 }) {
   if (DEMO_MODE) {
     await new Promise((resolve) => setTimeout(resolve, 600));
