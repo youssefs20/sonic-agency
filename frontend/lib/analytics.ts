@@ -5,13 +5,15 @@
 
 import { sendAnalyticsEvent } from "@/lib/api";
 
+const DEV = process.env.NODE_ENV !== "production";
+
 export function trackPageView(path: string) {
-  console.log("[Analytics] page_view:", path);
+  if (DEV) console.log("[Analytics] page_view:", path);
   send({ event_name: "page_view", path });
 }
 
 export function trackEvent(name: string, props?: { source?: string }) {
-  console.log("[Analytics] event:", name, props ?? {});
+  if (DEV) console.log("[Analytics] event:", name, props ?? {});
   send({
     event_name: name,
     path: typeof window !== "undefined" ? window.location.pathname : "",
@@ -22,6 +24,6 @@ export function trackEvent(name: string, props?: { source?: string }) {
 function send(event: { event_name: string; path?: string; source?: string }) {
   // Fire-and-forget: we don't await, and we never let a failure surface.
   sendAnalyticsEvent(event).catch((err) => {
-    console.warn("[Analytics] failed to send event:", err);
+    if (DEV) console.warn("[Analytics] failed to send event:", err);
   });
 }

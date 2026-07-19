@@ -6,12 +6,17 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+// Max lengths match the DB columns (VARCHAR sizes in 001_init.sql) so
+// validation rejects what the INSERT would refuse anyway.
 type ContactSubmission struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"      binding:"required,max=200"`
-	Email     string `json:"email"     binding:"required,email,max=200"`
-	Phone     string `json:"phone"     binding:"max=50"`
-	Message   string `json:"message"   binding:"required,max=2000"`
+	ID      int    `json:"id"`
+	Name    string `json:"name"    binding:"required,max=120"`
+	Email   string `json:"email"   binding:"required,email,max=255"`
+	Phone   string `json:"phone"   binding:"max=30"`
+	Message string `json:"message" binding:"required,max=2000"`
+	// Website is a honeypot: hidden on the real form, never stored. Any
+	// non-empty value means a bot filled it in.
+	Website   string `json:"website" binding:"max=200"`
 	CreatedAt string `json:"created_at"`
 }
 

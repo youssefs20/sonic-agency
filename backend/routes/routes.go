@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -42,23 +43,50 @@ func maxBodySize(limit int64) gin.HandlerFunc {
 	}
 }
 
+// limiterEvictAfter is how long an IP must stay quiet before its bucket
+// is dropped; limiterSweepEvery is how often the janitor checks. Without
+// eviction the per-IP map grows forever under scanning traffic.
+const (
+	limiterEvictAfter = 10 * time.Minute
+	limiterSweepEvery = 5 * time.Minute
+)
+
+type ipLimiter struct {
+	l        *rate.Limiter
+	lastSeen time.Time
+}
+
 // perIPRateLimit allows `limit` requests per `windowSeconds` for each
 // client IP, using an in-memory token bucket per IP. This resets on
 // server restart and isn't shared across multiple instances — fine for
 // a single-process marketing site, not for a horizontally scaled API.
+// A background janitor evicts buckets for IPs idle > limiterEvictAfter.
 func perIPRateLimit(limit int, windowSeconds int) gin.HandlerFunc {
 	var mu sync.Mutex
-	limiters := make(map[string]*rate.Limiter)
+	limiters := make(map[string]*ipLimiter)
+
+	go func() {
+		for range time.Tick(limiterSweepEvery) {
+			mu.Lock()
+			for ip, e := range limiters {
+				if time.Since(e.lastSeen) > limiterEvictAfter {
+					delete(limiters, ip)
+				}
+			}
+			mu.Unlock()
+		}
+	}()
 
 	getLimiter := func(ip string) *rate.Limiter {
 		mu.Lock()
 		defer mu.Unlock()
-		l, ok := limiters[ip]
+		e, ok := limiters[ip]
 		if !ok {
-			l = rate.NewLimiter(rate.Limit(float64(limit)/float64(windowSeconds)), limit)
-			limiters[ip] = l
+			e = &ipLimiter{l: rate.NewLimiter(rate.Limit(float64(limit)/float64(windowSeconds)), limit)}
+			limiters[ip] = e
 		}
-		return l
+		e.lastSeen = time.Now()
+		return e.l
 	}
 
 	return func(c *gin.Context) {

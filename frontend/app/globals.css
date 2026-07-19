@@ -250,24 +250,28 @@ h1, h2, h3 { font-family: var(--font-sora), system-ui, sans-serif; letter-spacin
 .hero-a4 { animation-delay: 1.32s; }
 
 .hero-line2 { position: relative; display: inline-block; }
-.hero-grow { display: inline-block; animation: dashIn 0.72s var(--ease) 0.66s both; will-change: transform, opacity, filter; }
+/* "We grow." dashes in at ~2.35s — just after the LoadingScreen fully clears
+   (its RUN_DURATION 1600ms + DASH_DURATION 700ms = 2300ms), so the full left→right
+   dash plays on the revealed page instead of behind the departing loader.
+   The streak lines lead it slightly and the underline trails it, keeping the original choreography. */
+.hero-grow { display: inline-block; animation: dashIn 0.85s var(--ease) 2.35s both; will-change: transform, opacity, filter; }
 
 .hero-streak { position: absolute; left: -10%; top: 50%; transform: translateY(-50%); width: 86%; height: 100%; pointer-events: none; z-index: 0; }
 .hero-streak i {
   position: absolute; left: 0; height: 3px; width: 100%; border-radius: 999px;
   background: linear-gradient(90deg, transparent, var(--blue) 30%, var(--red) 80%, transparent);
   transform-origin: left center; opacity: 0;
-  animation: streakRun 0.75s var(--ease) 0.6s 1 forwards;
+  animation: streakRun 0.75s var(--ease) 2.29s 1 forwards;
 }
-.hero-streak i:nth-child(1) { top: 18%; height: 2px; animation-delay: 0.56s; }
-.hero-streak i:nth-child(2) { top: 40%; height: 4px; animation-delay: 0.62s; }
-.hero-streak i:nth-child(3) { top: 62%; height: 3px; animation-delay: 0.68s; }
-.hero-streak i:nth-child(4) { top: 84%; height: 2px; animation-delay: 0.72s; }
+.hero-streak i:nth-child(1) { top: 18%; height: 2px; animation-delay: 2.25s; }
+.hero-streak i:nth-child(2) { top: 40%; height: 4px; animation-delay: 2.31s; }
+.hero-streak i:nth-child(3) { top: 62%; height: 3px; animation-delay: 2.37s; }
+.hero-streak i:nth-child(4) { top: 84%; height: 2px; animation-delay: 2.41s; }
 
 .hero-grow-underline {
   display: block; height: 6px; margin: 0.3rem auto 0; width: 0;
   background: linear-gradient(90deg, var(--blue), var(--red)); border-radius: 999px;
-  animation: underscore 0.5s var(--ease) 1.0s forwards;
+  animation: underscore 0.5s var(--ease) 2.69s forwards;
 }
 
 #bolt-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }

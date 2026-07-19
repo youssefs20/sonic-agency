@@ -6,11 +6,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+// Max lengths match the DB columns (VARCHAR sizes in 001_init.sql) so
+// validation rejects what the INSERT would refuse anyway.
 type AnalyticsEvent struct {
 	ID        int    `json:"id"`
 	EventName string `json:"event_name" binding:"required,max=100"`
-	Path      string `json:"path"       binding:"max=500"`
-	Source    string `json:"source"     binding:"max=200"`
+	Path      string `json:"path"       binding:"max=255"`
+	Source    string `json:"source"     binding:"max=100"`
 	CreatedAt string `json:"created_at"`
 }
 
